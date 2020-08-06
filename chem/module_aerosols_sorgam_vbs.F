@@ -6567,7 +6567,7 @@ SUBROUTINE         aerosols_sorgam_vbs_init(chem,convfac,z_at_w,                
 !
 !  IF USING OLD SIMULATION, DO NOT REINITIALIZE!
 !
-        if(chem_in_opt == 1 ) return
+        if(chem_in_opt == 1 .OR. config_flags%restart ) return
         do l=p_so4aj,num_chem
            chem(ims:ime,kms:kme,jms:jme,l)=epsilc
         enddo
@@ -8255,9 +8255,9 @@ end subroutine sorgam_vbs_dust_gocartemis
 
   ! default is 1 ug s2 m-5 == 1.e-9 kg s2 m-5
   !ch_dust(:,:)=0.8D-9   ! ch_dust is defined here instead of in the chemics_ini.F if with SOA_VBS  -czhao
-   ch_dust(:,:)=1.0D-9  ! default 
+  ! ch_dust(:,:)=1.0D-9  ! default 
   !ch_dust(:,:)=0.65D-9   ! ch_dust is tuned to match MODIS and AERONET measurements over Sahara 
-  !ch_dust(:,:)=1.0D-9*0.36  ! ch_dust is scaled to soa_vbs total dust emission
+  ch_dust(:,:)=1.0D-9*0.36  ! ch_dust is scaled to soa_vbs total dust emission
 
   ! executable statemenst
   DO n = 1, nmx
